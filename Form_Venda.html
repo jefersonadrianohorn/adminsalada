@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Identificação</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700&display=swap">
+    <link rel="stylesheet" href="Form.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-8IM5O3K1EckvScVeC1A3z2AqbP8jQJKDQO2V9AdW5D2xGz2CQE93nV14XuzMzBQmW3jSTnMbyvYavpN12tCTaQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div id="divBotaoImagem">
+        <!-- Botão com imagem que redireciona para outra página -->
+        <a id="botaoImagem" href="admin.html">
+            <img src="X.png" alt="Imagem do Botão">
+        </a>
+    </div>
+    
+    <header id="headerImage" style="background-image: url('fundo.avif');">
+        <div class="title">Formulário de Registro de Venda </div>
+    </header>
+
+    <form action="https://api.sheetmonkey.io/form/rhGbjNjwMw5XBrTGbvEFNu" method="post">        <label for="data">Data da Venda:</label>
+        <input type="date" id="data" name="data" required>
+
+        <label for="cliente">Nome do Cliente:</label>
+        <input type="text" id="cliente" name="cliente" required>
+
+        <label for="produto">Produto Vendido:</label>
+        <select id="produto" name="produto" required>
+            <option value="salada de frutas (vegana)">salada de frutas (vegana)</option>
+        </select>
+
+        <label for="quantidade">Quantidade:</label>
+        <input type="number" id="quantidade" name="quantidade" min="1"  step="1" value="0" required>
+
+        <label for="valor">Valor Unitário:</label>
+        <input type="number" id="valor" name="valor" min="0.01" step="0.01" required>
+
+        <label for="formaPagamento">Forma de Pagamento:</label>
+        <select id="formaPagamento" name="formaPagamento" required>
+            <option value="dinheiro">Dinheiro</option>
+            <option value="cartao">Cartão de Crédito</option>
+            <option value="transferencia">Transferência Bancária</option>
+        </select>
+
+        <!-- Se necessário, você pode adicionar mais campos para detalhes da venda -->
+
+        <label for="observacoes">Observações:</label>
+        <textarea id="observacoes" name="observacoes"></textarea>
+
+      
+
+        <label for="total">Valor Total:</label>
+        <input type="text" id="total" name="total" readonly>
+
+        <input type="submit" value="Registrar Venda">
+    </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Obtém a data atual no formato YYYY-MM-DD
+            var dataAtual = new Date().toISOString().split('T')[0];
+    
+            // Define o valor do campo de entrada de data para a data atual
+            document.getElementById('data').value = dataAtual;
+    
+            // Chama a função de calcularTotal para preencher o valor total inicialmente
+            calcularTotal();
+        });
+    
+        document.addEventListener('DOMContentLoaded', function () {
+            // Adicione um ouvinte de evento à mudança de cliente cadastrado
+            var cadastradoSim = document.getElementById('cadastradoSim');
+            var camposClienteRegistrado = document.getElementById('camposClienteRegistrado');
+    
+            cadastradoSim.addEventListener('change', function () {
+                // Mostrar ou ocultar campos com base na seleção do rádio
+                camposClienteRegistrado.style.display = cadastradoSim.checked ? 'block' : 'none';
+            });
+        });
+    
+        document.addEventListener('DOMContentLoaded', function () {
+            // Adicione um ouvinte de evento à seleção do produto
+            var produtoSelect = document.getElementById('produto');
+            var quantidadeInput = document.getElementById('quantidade');
+            var valorInput = document.getElementById('valor');
+            var totalInput = document.getElementById('total');
+    
+            // Adicione um ouvinte de evento à mudança de produto ou quantidade
+            produtoSelect.addEventListener('change', calcularTotal);
+            quantidadeInput.addEventListener('input', calcularTotal);
+    
+            // Função para calcular o valor total
+            function calcularTotal() {
+                var quantidade = parseFloat(quantidadeInput.value) || 0;
+                var valorUnitario = parseFloat(valorInput.value) || 0;
+                var total = quantidade * valorUnitario;
+    
+                // Atualize o campo de valor total
+                totalInput.value = total.toFixed(2);
+            }
+        });
+    </script>
+</body>
+</html>
